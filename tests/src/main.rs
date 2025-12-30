@@ -13,17 +13,17 @@ const WRITE_COPY_PROGRAM_ID: Pubkey = Pubkey::new_from_array([0x04; 32]);
 
 fn main() {
     println!(
-        "{:>12} {:>12} {:>12} {:>10} {:>10}",
-        "Iterations", "Loop CU", "Copy CU", "Saved CU", "Saved %"
+        "{:>12} {:>12} {:>10} {:>10}",
+        "Loop CU", "Copy CU", "Saved CU", "Saved %"
     );
     println!("{}", "-".repeat(64));
 
-    benchmark_write_bytes(1);
+    benchmark_write_bytes();
 }
 
-fn benchmark_write_bytes(iterations: u8) {
-    let loop_cu = run_write_benchmark(WRITE_LOOP_PROGRAM_ID, "write-loop", iterations);
-    let copy_cu = run_write_benchmark(WRITE_COPY_PROGRAM_ID, "write-copy", iterations);
+fn benchmark_write_bytes() {
+    let loop_cu = run_write_benchmark(WRITE_LOOP_PROGRAM_ID, "write-loop");
+    let copy_cu = run_write_benchmark(WRITE_COPY_PROGRAM_ID, "write-copy");
 
     let saved = loop_cu.saturating_sub(copy_cu);
     let percent = if loop_cu > 0 {
@@ -33,12 +33,12 @@ fn benchmark_write_bytes(iterations: u8) {
     };
 
     println!(
-        "{:>12} {:>12} {:>12} {:>10} {:>9.1}%",
-        iterations, loop_cu, copy_cu, saved, percent
+        "{:>12} {:>12} {:>10} {:>9.1}%",
+        loop_cu, copy_cu, saved, percent
     );
 }
 
-fn run_write_benchmark(program_id: Pubkey, program_name: &str, iterations: u8) -> u64 {
+fn run_write_benchmark(program_id: Pubkey, program_name: &str) -> u64 {
     let program_path = format!("target/deploy/{}.so", program_name.replace('-', "_"));
 
     let program_bytes = match std::fs::read(&program_path) {
@@ -74,7 +74,7 @@ fn run_write_benchmark(program_id: Pubkey, program_name: &str, iterations: u8) -
             is_signer: false,
             is_writable: true,
         }],
-        data: vec![iterations],
+        data: vec![],
     };
 
     let blockhash = svm.latest_blockhash();
