@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "programs/write-loop",
+    "programs/write-copy",
+    "tests",
+]
+
+[workspace.dependencies]
+pinocchio = { path = "../pinocchio/sdk" }
+solana-sdk = "2.2"
+litesvm = "0.6"
