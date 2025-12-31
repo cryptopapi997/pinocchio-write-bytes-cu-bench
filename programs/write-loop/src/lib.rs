@@ -32,9 +32,9 @@ pub fn process_instruction(
 ) -> ProgramResult {
     let account = &accounts[0];
     // Transfer
-    let mut data1 = [UNINIT_BYTE; 9];
-    write_bytes_loop(&mut data1[0..1], &[3u8]); // discriminator
-    write_bytes_loop(&mut data1[1..9], &12345678u64.to_le_bytes()); // amount
+    // let mut data1 = [UNINIT_BYTE; 9];
+    // write_bytes_loop(&mut data1[0..1], &[3u8]); // discriminator
+    // write_bytes_loop(&mut data1[1..9], &12345678u64.to_le_bytes()); // amount
 
     // Initialize mint
     let mut data2 = [UNINIT_BYTE; 67];
@@ -44,7 +44,7 @@ pub fn process_instruction(
     write_bytes_loop(&mut data2[34..35], &[1u8]); // has freeze authority
     write_bytes_loop(&mut data2[35..67], account.address().as_ref()); // freeze authority
 
-    core::hint::black_box(&data1);
+    // core::hint::black_box(&data1);
     core::hint::black_box(&data2);
 
     Ok(())

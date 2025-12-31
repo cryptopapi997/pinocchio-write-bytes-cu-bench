@@ -1,0 +1,15 @@
+[package]
+name = "token-ops"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+default = ["bpf-entrypoint"]
+bpf-entrypoint = []
+
+[dependencies]
+pinocchio = { workspace = true, features = ["cpi"] }
+pinocchio-token = { workspace = true }

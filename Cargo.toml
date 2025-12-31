@@ -3,10 +3,15 @@ resolver = "2"
 members = [
     "programs/write-loop",
     "programs/write-copy",
+    "programs/token-ops",
+    "programs/token-ops-2022",
     "tests",
 ]
 
 [workspace.dependencies]
 pinocchio = { path = "../pinocchio/sdk" }
+pinocchio-token = { path = "../pinocchio/programs/token" }
+pinocchio-token-2022 = { path = "../pinocchio/programs/token-2022" }
 solana-sdk = "2.2"
 litesvm = "0.6"
+spl-token = "7"
